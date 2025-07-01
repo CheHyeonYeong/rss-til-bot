@@ -22,11 +22,11 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      # - name: Randomize execution time
-      #   run: |
-      #     SECONDS=$((RANDOM % 3600))  # 0~3599초 대기
-      #     echo "Sleeping for $SECONDS seconds before execution..."
-      #     sleep $SECONDS
+      - name: Randomize execution time
+        run: |
+          SECONDS=$((RANDOM % 3600))  # 0~3599초 대기
+          echo "Sleeping for $SECONDS seconds before execution..."
+          sleep $SECONDS
 
       - name: Run TIL generation
         run: python rss_til.py
