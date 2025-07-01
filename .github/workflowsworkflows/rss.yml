@@ -1,0 +1,38 @@
+name: Daily TIL from RSS
+
+on:
+  schedule:
+    - cron: '0 15 * * *'  # UTC 15시 (KST 자정) - 여기에 sleep으로 랜덤화할 거임
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Randomize execution time
+        run: |
+          SECONDS=$((RANDOM % 3600))  # 0~3599초 대기
+          echo "Sleeping for $SECONDS seconds before execution..."
+          sleep $SECONDS
+
+      - name: Run TIL generation
+        run: python rss_til.py
+
+      - name: Commit TIL
+        run: |
+          git config --local user.email "gusdudco6@naver.com"
+          git config --local user.name "CheHyeonYeong"
+          git add .
+          git commit -m "🌱 TIL for $(date +'%Y-%m-%d')" || echo "No changes"
+          git push
