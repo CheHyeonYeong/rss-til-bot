@@ -35,4 +35,4 @@ jobs:
           git config --local user.name "CheHyeonYeong"
           git add .
           git commit -m "🌱 TIL for $(date +'%Y-%m-%d')" || echo "No changes"
-          git push
+          git push origin main
