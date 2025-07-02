@@ -1,23 +1,101 @@
+
+
 # rss-til-bot
 
-이 저장소는 dev.to에서 인기 글을 가져와 간단히 요약하고 한국어로 번역하여 마크다운 형식의 TIL(Today I Learned) 파일로 저장해 주는 파이썬 스크립트와 GitHub Actions 워크플로우를 포함합니다.
+dev.to에서 인기 게시글을 가져와 간단하게 요약하고, 한국어로 번역한 후 `til/` 폴더에 마크다운으로 저장하는 자동화 봇입니다.  
+GitHub Actions를 통해 매일 새 TIL을 생성합니다.
 
-## 요구 사항
+---
 
-- Python 3.10 이상
-- `requirements.txt`에 명시된 파이썬 패키지들
+## 🛠 사용 기술
 
-의존성 설치 예시는 다음과 같습니다.
+- Python 3.10+
+- GitHub Actions
+- OpenAI API (또는 다른 번역 API 사용 가능)
+
+---
+
+## 📦 설치 및 실행 방법
+
+### 1. 의존성 설치
 
 ```bash
 pip install -r requirements.txt
+````
+
+### 2. 로컬에서 실행하기
+
+```bash
+python rss_til.py
 ```
 
-## 사용 방법
+> 🔧 `.env` 파일에 필요한 환경변수를 설정해야 합니다. (예: `OPENAI_API_KEY`)
 
-1. 저장소를 클론한 뒤 위의 명령으로 필요한 패키지를 설치합니다.
-2. `python rss_til.py` 명령을 실행하면 최신 dev.to 글을 요약하여 `til/` 폴더에 마크다운 파일로 저장합니다.
+---
 
-## GitHub Actions 워크플로우
+## 🧾 기능 설명
 
-`.github/workflows/rss.yml` 파일에 정의된 워크플로우가 매일 한 번 실행됩니다. 이 워크플로우는 랜덤한 시간에 `rss_til.py` 스크립트를 실행하고, 새로 생성된 TIL 파일을 커밋하여 저장소에 자동으로 업로드합니다.
+* `rss_til.py`:
+
+  * dev.to 인기 글을 하나 가져옴
+  * 내용을 요약하고 한국어 번역
+  * `til/` 디렉토리에 날짜 기반 마크다운 파일 저장
+
+* `.github/workflows/rss.yml`:
+
+  * 매일 1회 GitHub Actions로 자동 실행
+  * 레포에 커밋으로 저장됨
+
+---
+
+## ⚙️ 환경변수 (.env)
+
+```env
+OPENAI_API_KEY=your_openai_key_here
+```
+
+또는 사용하는 번역 API에 맞게 조정하세요.
+
+---
+
+## 📁 디렉토리 구조
+
+```
+rss-til-bot/
+├── rss_til.py
+├── til/
+│   └── 2025-07-02.md
+├── requirements.txt
+├── .github/
+│   └── workflows/
+│       └── rss.yml
+└── README.md
+```
+
+---
+
+## 📅 자동화 스케줄
+
+GitHub Actions가 매일 오전 9시(KST 기준) `rss_til.py`를 실행하고, 결과를 `til/` 폴더에 저장 후 커밋합니다.
+
+---
+
+## 📄 라이선스
+
+MIT License (원하면 `LICENSE` 파일 추가 가능)
+
+---
+
+## 💡 향후 개선사항
+
+* 요약 정확도 향상
+* 번역 품질 튜닝
+* 멀티 RSS 지원
+* TIL 포맷 커스터마이징
+
+---
+
+## 🙋 문의
+
+개선 제안, 버그 제보는 [Issues](https://github.com/your-id/rss-til-bot/issues)로 주세요!
+
