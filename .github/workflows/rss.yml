@@ -31,10 +31,13 @@ jobs:
       - name: Run TIL generation
         run: python rss_til.py
 
-      - name: Commit TIL
+      - name: Commit and Push with PAT
+        env:
+          TOKEN: ${{ secrets.GH_PAT }}
         run: |
           git config --local user.name 'CheHyeonYeong'
           git config --local user.email 'gusdudco6@naver.com'
           git add .
           git commit -m "🌱 TIL for $(date +'%Y-%m-%d')" || echo "No changes"
+          git remote set-url origin https://$TOKEN@github.com/${{ github.repository }}
           git push origin main
